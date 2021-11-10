@@ -233,6 +233,8 @@ Route::group(['middleware' => ['auth', 'active']], function() {
 	Route::get('setting/pos_setting', 'SettingController@posSetting')->name('setting.pos');
 	Route::post('setting/pos_setting_store', 'SettingController@posSettingStore')->name('setting.posStore');
 	Route::get('setting/empty-database', 'SettingController@emptyDatabase')->name('setting.emptyDatabase');
+	Route::get('setting/textApp', 'SettingController@textApp')->name('setting.textApp');
+	Route::post('setting/UpdateText','SettingController@UpdateText');
 
 	Route::get('expense_categories/gencode', 'ExpenseCategoryController@generateCode');
 	Route::post('expense_categories/import', 'ExpenseCategoryController@import')->name('expense_category.import');
@@ -293,5 +295,9 @@ Route::group(['middleware' => ['auth', 'active']], function() {
 
 	Route::get('/home', 'HomeController@index')->name('home');
 	Route::get('my-transactions/{year}/{month}', 'HomeController@myTransaction');
+
+
+	/** Nuevas vistas */
+	
 });
 

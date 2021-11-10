@@ -13,6 +13,8 @@ use App\PosSetting;
 use App\GeneralSetting;
 use App\HrmSetting;
 use App\RewardPointSetting;
+use App\Text;
+use App\Language;
 use DB;
 use ZipArchive;
 use Twilio\Rest\Client;
@@ -34,6 +36,7 @@ class SettingController extends Controller
         }
         return redirect()->back()->with('message', 'Database cleared successfully');
     }
+    
     public function generalSetting()
     {
         $lims_general_setting_data = GeneralSetting::latest()->first();
@@ -80,6 +83,11 @@ class SettingController extends Controller
         $general_setting->staff_access = $data['staff_access'];
         $general_setting->date_format = $data['date_format'];
         $general_setting->developed_by = $data['developed_by'];
+        $general_setting->ApiKey_google  = $data['ApiKey_google'];
+        $general_setting->fb            = $data['fb'];
+        $general_setting->insta         = $data['insta'];
+        $general_setting->youtube           = $data['youtube'];
+        $general_setting->twitter           = $data['twitter'];
         $general_setting->invoice_format = $data['invoice_format'];
         $general_setting->state = $data['state'];
         $logo = $request->site_logo;
@@ -367,5 +375,26 @@ class SettingController extends Controller
             $pos_setting->keybord_active = true;
     	$pos_setting->save();
     	return redirect()->back()->with('message', 'POS setting updated successfully');
+    }
+
+    /** Nuevas funciones */
+    public function textApp()
+    {
+        $lang = new Language;
+
+        return View('setting.textApp',[
+
+			'form_url'  => 'setting/UpdateText',
+			'data' 		=> new Text,
+            'langs' 	=> $lang->getWithEng()
+        ]);
+    }
+
+    public function UpdateText(Request $request)
+    {
+        $req = new Text;
+        $req->addNew($request->all());
+        
+        return redirect()->back()->with('message','Datos actualizados');
     }
 }
